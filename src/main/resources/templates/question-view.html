@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cuestionario</title>
+</head>
+<body>
+	<form action="/questions/check" method="post">
+		<table>
+			<thead>
+				<tr>
+					<th>Pregunta</th>
+					<th>Tu Respuesta</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="question : ${list}">
+					<td th:text="${question.question}"></td>
+					<td><input type="radio"
+						th:name="'answers[' + ${question.id} + ']'" value="true" required>
+						Verdadero <input type="radio"
+						th:name="'answers[' + ${question.id} + ']'" value="false">
+						Falso</td>
+				</tr>
+
+			</tbody>
+		</table>
+		<button type="submit">Corregir</button>
+	</form>
+
+	<!-- Mostrar resultados si existen -->
+	<div th:if="${results != null}">
+		<h3>Resultados</h3>
+		<ul>
+			<li th:each="question : ${list}"><span
+				th:text="'Pregunta: ' + ${question.question} + ' - '"></span> <span
+				th:text="${results[question.id] ? 'Correcto' : 'Incorrecto'}"></span>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
